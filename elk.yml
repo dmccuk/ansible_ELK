@@ -53,4 +53,77 @@
       service:
         name: elasticsearch
         state: started
+        enabled: yes
+
+# Kibana Setup
+    - name: Creates /data directory
+      file:
+        path: /data
+        state: directory
+        mode: "u=rwx,g=rwx,o=rwx"
+    - name: Download kibana tar ball
+      get_url:
+        url: https://artifacts.elastic.co/downloads/kibana/kibana-6.4.0-linux-x86_64.tar.gz
+        dest: /data/kibana-6.4.0-linux-x86_64.tar.gz
+        mode: 0755
+    - name: unzip kibana
+      unarchive:
+        src: /data/kibana-6.4.0-linux-x86_64.tar.gz
+        dest: /data/
+        remote_src: yes
+        creates: /data/kibana-6.4.0-linux-x86_64/config/kibana.yml
+    - name: kibana systemd copy
+      template:
+        src: elk_config/kibana.service.j2
+        dest: /etc/systemd/system/kibana.service
+        mode: 0644
+    - name: Update default kibana config
+      template:
+        src: elk_config/kibana.yml.j2
+        dest: /data/kibana-6.4.0-linux-x86_64/config/kibana.yml
+        mode: 0660
+    - name: force systemd reload
+      systemd:
+        daemon_reload: yes
+    - name: Start the kibana service
+      service:
+        name: kibana
+        state: started
+        enabled: yes
+
+# Logstash Setup
+    - name: Creates /data directory
+      file:
+        path: /data
+        state: directory
+        mode: "u=rwx,g=rwx,o=rwx"
+    - name: Download logstash tar ball
+      get_url:
+        url: https://artifacts.elastic.co/downloads/logstash/logstash-6.4.0.tar.gz
+        dest: /data/logstash-6.4.0.tar.gz
+        mode: 0755
+    - name: unzip logstash
+      unarchive:
+        src: /data/logstash-6.4.0.tar.gz
+        dest: /data/
+        remote_src: yes
+        creates: /data/logstash-6.4.0/conf.d/inputs.conf
+    - name: logstash systemd copy
+      template:
+        src: elk_config/logstash.service.j2
+        dest: /etc/systemd/system/kibana.service
+        mode: 0644
+    - name: Update default logstash config
+      template:
+        src: elk_config/inputs.conf.j2
+        dest: /data/logstash-6.4.0/conf.d/inputs.conf
+        mode: 0660
+    - name: force systemd reload
+      systemd:
+        daemon_reload: yes
+    - name: Start the logstash service
+      service:
+        name: logstash
+        state: started
+        enabled: yes
 
