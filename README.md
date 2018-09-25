@@ -12,9 +12,9 @@ This repo expects you to already know how to use ansible playbooks and roles.
 ## Pre-requisites
 Please install the following on all nodes you want to deploy ELK Stack on:
 
-Server used: Ubuntu 16.04
-Packages: wget curl git python-minimal default-jre
-Minimum memory requirements: 4GB
+ * Server used: Ubuntu 16.04
+ * Packages: wget curl git python-minimal default-jre
+ * Minimum memory requirements: 4GB
 
 ## Usage
 Clone the repo:
