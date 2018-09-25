@@ -1,6 +1,6 @@
 ![Alt text](elk1.png?raw=true)
 
-# ansible Playbook & Role for ELK Stack deployment
+# Ansible Playbook & Role for ELK Stack deployment
 
 This repo containts everything you need to get started with ELK Stack + beats using ansible to deploy the code on your server.
 
