@@ -1,33 +1,33 @@
 ![Alt text](elk1.png?raw=true)
-# ansible Playbook & Role
 
-one ansible playbook and ansible role to install, configure and run ELK Stack + beats
+# ansible Playbook & Role for ELK Stack deployment
+
+This repo containts everything you need to get started with ELK Stack + beats using ansible to deploy the code on your server.
+
+In this repo there is a playbook with all the code contained in one file (elk.yml) and an ansible role under the "role" directory that does exactly the same thing, but within an ansible role setup.
+
+## Assumed knowledge
+This repo expects you to already know how to use ansible playbooks and roles.
+
+## Pre-requisites
+Please install the following on all nodes you want to deploy ELK Stack on:
+
+Server used: Ubuntu 16.04
+Packages: wget curl git python-minimal default-jre
+Minimum memory requirements: 4GB
+
+## Usage
+Clone the repo:
+
+    # git clone https://github.com/dmccuk/ansible_play_role.git
+
+Run the playbook:
+
+    # ansible-playbook -i <server_name/ip>, elk.yml
 
 ## List out available Indexes:
 
+Once you've deployed the stack, on your server, you can run the following command to see the indexes available.
+
     # curl localhost:9200/_cat/indices?v
 
-
-# Getting started with Terraform
-
-In my example, we are going to setup and launch one AWS EC2 instance. Please read the Pre-requisites below and make sure you are happy to proceed.
----
-## Pre-Requisites:
-
-1. Install Terraform. [link](https://www.terraform.io/intro/getting-started/install.html)
-2. Have an account on AWS (free Tier if possible). [link](https://aws.amazon.com/free)
-3. Some basic knowledge of AWS.
-  * Creating and download your key pair (.pem file). [link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
-    * Create your Access key and access secret (one time creation). [link](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey)
-  * Familiarity with the AWS console.
-  * AWS training - I recommend Ryan Kroonemburg on Udemy. [link](https://www.udemy.com/user/ryankroonenburg/)
-
-## Setup instructions
-
-### On your server (where you have installed Terraform)
-
-Create /opt/demo:
-````
-# mkdir -p /opt/demo
-# cd /opt/demo
-````
