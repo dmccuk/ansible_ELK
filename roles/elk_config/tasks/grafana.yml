@@ -1,7 +1,7 @@
 # Grafana setup
     - name: Grafana - install script
       template:
-        src: elk_config/grafana.sh.j2
+        src: elk_config/templates/grafana.sh.j2
         dest: /data/grafana.sh
         mode: 0755
 

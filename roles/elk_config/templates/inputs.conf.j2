@@ -10,6 +10,19 @@ filter {
   }
 }
 
+filter {
+  mutate {
+    convert => { "[system][process][cpu][total][norm][pct]" => "float" }
+    convert => { "[system][diskio][iostat][request][avg_size]" => "float" }
+    convert => { "[system][process][memory][rss][pct]" => "float" }
+    convert => { "[system][process][cpu][total][pct]" => "float" }
+    convert => { "[system][diskio][iostat][queue][avg_size]" => "float" }
+    convert => { "[system][core][steal][pct]" => "float" }
+    convert => { "[system][cpu][steal][pct]" => "float" }
+    convert => { "[system][diskio][iostat][service_time]" => "float" }
+  }
+}
+
 output {
   elasticsearch {
     hosts => "localhost:9200"
