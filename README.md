@@ -1,3 +1,4 @@
+![Alt text](elk1.png?raw=true)
 # ansible Playbook & Role
 
 one ansible playbook and ansible role to install, configure and run ELK Stack + beats
@@ -6,7 +7,7 @@ one ansible playbook and ansible role to install, configure and run ELK Stack + 
 
     # curl localhost:9200/_cat/indices?v
 
-![Alt text](terraform_472.png?raw=true)
+
 # Getting started with Terraform
 
 In my example, we are going to setup and launch one AWS EC2 instance. Please read the Pre-requisites below and make sure you are happy to proceed.
