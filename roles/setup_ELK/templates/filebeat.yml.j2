@@ -1,0 +1,17 @@
+filebeat.prospectors:
+- paths:
+  - '/tmp/metricbeat/metricbeat'
+  json.keys_under_root: true
+  fields_under_root: true
+  fields:
+    tags: ["metricbeat"]
+
+processors:
+- decode_json_fields:
+    when.regexp.message: '^{'
+    fields: ["message"]
+    target: ""
+    overwrite_keys: true
+
+output.logstash:
+  hosts: ["localhost:5044"]

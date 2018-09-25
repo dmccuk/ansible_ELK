@@ -1,0 +1,50 @@
+---
+# Elasticsearch setup
+    - sysctl:
+        name: vm.max_map_count
+        value: 262144
+        sysctl_set: yes
+    - name: Add user 'elasticsearch'
+      user:
+        name: elasticsearch
+        comment: elasticsearch user
+    - name: Creates /data directory
+      file:
+        path: /data
+        state: directory
+        mode: "u=rwx,g=rwx,o=rwx"
+    - name: Download elasticsearch tar ball
+      get_url:
+        url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.0.tar.gz
+        dest: /data/elasticsearch-6.4.0.tar.gz
+        mode: 0755
+    - name: unzip elasticsearch
+      unarchive:
+        src: /data/elasticsearch-6.4.0.tar.gz
+        dest: /data/
+        remote_src: yes
+        creates: /data/elasticsearch-6.4.0/config/elasticsearch.yml
+    - name: elasticsearch systemd copy
+      template:
+        src: elk_config/elasticsearch.service.j2
+        dest: /etc/systemd/system/elasticsearch.service
+        mode: 0644
+    - name: Update default elasticsearch config
+      template:
+        src: elk_config/elasticsearch.yml.j2
+        dest: /data/elasticsearch-6.4.0/config/elasticsearch.yml
+        mode: 0660
+    - file:
+        path: /data/elasticsearch-6.4.0
+        owner: elasticsearch
+        group: elasticsearch
+        recurse: yes
+    - name: force systemd reload
+      systemd:
+        daemon_reload: yes
+    - name: Start the elasticsearch service
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
+

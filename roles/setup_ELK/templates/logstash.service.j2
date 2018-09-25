@@ -1,0 +1,10 @@
+[Unit]
+Description=Logstash service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/data/logstash-6.4.0/start.sh
+
+[Install]
+WantedBy=multi-user.target

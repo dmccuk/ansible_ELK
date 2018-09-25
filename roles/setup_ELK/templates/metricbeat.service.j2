@@ -1,0 +1,10 @@
+[Unit]
+Description=Metricbeat service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/data/metricbeat-6.4.0-linux-x86_64/metricbeat -e -c /data/metricbeat-6.4.0-linux-x86_64/metricbeat.yml
+
+[Install]
+WantedBy=multi-user.target

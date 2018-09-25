@@ -1,0 +1,19 @@
+input {
+  beats {
+    port => 5044
+  }
+}
+
+filter {
+  mutate {
+    remove_field => [ '[host]' ]
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => "localhost:9200"
+    index => 'logstash-daily-%{+YYYY.MM.dd}'
+  }
+}
+
