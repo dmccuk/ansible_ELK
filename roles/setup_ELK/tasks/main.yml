@@ -1,8 +1,0 @@
----
-# tasks file for setup_ELK
-- include elasticsearch.yml
-- include logstash.yml
-- include kibana.yml
-- include metricbeat.yml
-- include filebeat.yml
-- debug: msg="If all went well you can now connect to *** http://{{ ansible_default_ipv4.address }}:5601 *** Kibana takes around 5 minutes to run the first time."

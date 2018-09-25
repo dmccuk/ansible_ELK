@@ -26,12 +26,12 @@
         creates: /data/elasticsearch-6.4.0/config/elasticsearch.yml
     - name: elasticsearch systemd copy
       template:
-        src: elk_config/elasticsearch.service.j2
+        src: elk_config/templates/elasticsearch.service.j2
         dest: /etc/systemd/system/elasticsearch.service
         mode: 0644
     - name: Update default elasticsearch config
       template:
-        src: elk_config/elasticsearch.yml.j2
+        src: elk_config/templates/elasticsearch.yml.j2
         dest: /data/elasticsearch-6.4.0/config/elasticsearch.yml
         mode: 0660
     - file:

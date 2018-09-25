@@ -1,0 +1,11 @@
+---
+# tasks file for setup_ELK
+#- include: elasticsearch.yml
+#- include: logstash.yml
+#- include: kibana.yml
+#- include: metricbeat.yml
+#- include: filebeat.yml
+- name: Get my public IP
+  ipify_facts:
+- debug: var=ipify_public_ip
+- debug: msg="If all went well you can now connect to *** http://{{ ipify_public_ip }}:5601 *** Kibana takes around 5 minutes to run the first time."

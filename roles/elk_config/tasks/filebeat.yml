@@ -13,12 +13,12 @@
         creates: /data/filebeat-6.4.0-linux-x86_64/metricbeat.yml
     - name: logstash systemd copy
       template:
-        src: elk_config/filebeat.service.j2
+        src: elk_config/templates/filebeat.service.j2
         dest: /etc/systemd/system/filebeat.service
         mode: 0644
     - name: Update default filebeat config
       template:
-        src: elk_config/filebeat.yml.j2
+        src: elk_config/templates/filebeat.yml.j2
         dest: /data/filebeat-6.4.0-linux-x86_64/filebeat.yml
         mode: 0700
     - name: force systemd reload
