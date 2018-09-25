@@ -31,3 +31,23 @@ Once you've deployed the stack, on your server, you can run the following comman
 
     # curl localhost:9200/_cat/indices?v
 
+# ISSUES:
+If you get this error:
+
+```
+fatal: [34.245.169.116]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '34.245.169.116' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey).\r\n", "unreachable": true}
+        to retry, use: --limit @/home/vagrant/ansible/roles/deployELK.retry
+
+PLAY RECAP ************************************************************************************************
+34.245.169.116             : ok=0    changed=0    unreachable=1    failed=0
+```
+
+Run the following commands that are in the pre_run.sh script:
+```
+# ssh-agent bash
+# ssh-add ../you_ec2_key.pem
+```
+Now re-run the ansible-playbook. It should work this time.
+
+
+
