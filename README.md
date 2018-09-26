@@ -31,6 +31,16 @@ Once you've deployed the stack, on your server, you can run the following comman
 
     # curl localhost:9200/_cat/indices?v
 
+# Grafana Setup:
+As part of this role I've include a script that will install grafana. Simply run the script, then login to the grafana webpage on port 3000.
+
+    # /data/grafana.sh
+
+Visit http://<server_or_IP:3000
+
+Login username and password is: admin/admin
+
+
 # ISSUES:
 If you get this error:
 
