@@ -14,7 +14,7 @@ Please install the following on all nodes you want to deploy ELK Stack on:
 
  * Server used: Ubuntu 16.04
  * Packages: wget curl git python-minimal default-jre
- * Minimum memory requirements: 4GB
+ * Minimum memory requirements: 4GB (t2.medium in AWS)
 
 ## Usage
 Clone the repo:
@@ -25,11 +25,17 @@ Run the playbook:
 
     # ansible-playbook -i <server_name/ip>, elk.yml
 
+If you get an error about Permission denied please check the bottom of this page.
+
 ## List out available Indexes:
 
-Once you've deployed the stack, on your server, you can run the following command to see the indexes available.
+Once you've deployed the stack, on your server command line, you can run the following command to see the indexes available.
 
     # curl localhost:9200/_cat/indices?v
+
+## Add index In Kibana
+screenshot here
+
 
 # Grafana Setup:
 As part of this role I've include a script that will install grafana. Simply run the script, then login to the grafana webpage on port 3000.
@@ -40,6 +46,9 @@ Visit http://<server_or_IP:3000
 
 Login username and password is: admin/admin
 
+## Grafana setup
+Add example grafana dashboard file. This can be downloaded to the PC and imported into Grafana. It should work out of the box.
+Screen shot here.
 
 # ISSUES:
 If you get this error:
@@ -58,6 +67,3 @@ Run the following commands that are in the pre_run.sh script:
 # ssh-add ../you_ec2_key.pem
 ```
 Now re-run the ansible-playbook. It should work this time.
-
-
-
