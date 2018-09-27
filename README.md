@@ -138,6 +138,15 @@ Select the file to import and set these settings:
 The dashboard will appear and you will see basic CPU and Memory utilisation.
 ![Alt text](pics/grafana7.PNG?raw=true)
 
+# Test the metrics!
+
+Install the "stress" program on Ubuntu to make the metrics move and watch them on grafana.
+
+    # stress -c 4 -m 2 -d 1
+    stress: info: [10844] dispatching hogs: 2 cpu, 0 io, 2 vm, 1 hdd
+
+Now go back to grafana and watch the server resources change.
+
 # ISSUES:
 If you get this error:
 
