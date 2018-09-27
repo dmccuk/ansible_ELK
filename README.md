@@ -36,21 +36,25 @@ http://<server_or_IP:5601
 ## Add index In Kibana
 
 On your Kibana webpage, click on "Discover" and add in your index as below. Click next:
-![Alt text](pics/kibana1.png?raw=true)
+![Alt text](pics/kibana1.PNG?raw=true)
 
 Select @timestamp:
-![Alt text](pics/kibana2.png?raw=true)
+![Alt text](pics/kibana2.PNG?raw=true)
 
 Select Discover and see the messages:
-![Alt text](pics/kibana3.png?raw=true)
+![Alt text](pics/kibana3.PNG?raw=true)
 
 ## List out available Indexes:
 
 Once you've deployed the stack, on your server command line, you can run the following command to see the indexes available.
 
-    # curl localhost:9200/_cat/indices?v
+    # curl -s http://localhost:9200/_cat/indices?v
+    health status index                     uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   .kibana                   2UuCqV84Rb-u7rpUXHWDWg   1   0          2            0     20.9kb         20.9kb
+    yellow open   logstash-daily-2018.09.27 tbeKCDg_QOCB-7B-oQUiTQ   5   1     126642            0     77.4mb         77.4mb
 
 # Grafana Setup:
+
 As part of this role I've include a script that will install grafana. Simply run the script, then login to the grafana webpage on port 3000.
 
 <details>
@@ -107,13 +111,32 @@ Sep 27 09:10:28 ip-172-31-25-50 systemd[1]: Started Grafana instance.
 
 ### Grafana Web URL
 
-Visit http://<server_or_IP:3000
+Visit http://<fqdn_or_IP:3000
 
 Login username and password is: admin/admin
 
+![Alt text](pics/grafana1.PNG?raw=true)
+
 ## Grafana setup
-Add example grafana dashboard file. This can be downloaded to the PC and imported into Grafana. It should work out of the box.
-Screen shot here.
+Add example grafana dashboard file. This can be downloaded to the PC and imported into Grafana (Grafana_basic_dashboard):
+
+Now setup Elasticsearch as your Datasource:
+![Alt text](pics/grafana1.1PNG?raw=true)
+![Alt text](pics/grafana4.PNG?raw=true)
+
+And use these settings:
+![Alt text](pics/grafana5.PNG?raw=true)
+Save and exit.
+
+Now import the dashboard. Download this file from this GitHub to you PC (Grafana_basic_dashboard):
+![Alt text](pics/grafana2.PNG?raw=true)
+![Alt text](pics/grafana3.PNG?raw=true)
+
+Select the file to import and set these settings:
+![Alt text](pics/grafana6.PNG?raw=true)
+
+The dashboard will appear and you will see basic CPU and Memory utilisation.
+![Alt text](pics/grafana7.PNG?raw=true)
 
 # ISSUES:
 If you get this error:
