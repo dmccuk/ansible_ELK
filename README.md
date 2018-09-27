@@ -1,4 +1,4 @@
-![Alt text](elk1.png?raw=true)
+![Alt text](pics/elk1.png?raw=true)
 
 # Ansible Playbook & Role for ELK Stack + beats deployment
 
@@ -27,15 +27,28 @@ Run the playbook:
 
 If you get an error about Permission denied please check the bottom of this page.
 
+## Open Kibana
+
+Go to the URL for Kibana:
+
+http://<server_or_IP:5601
+
+## Add index In Kibana
+
+On your Kibana webpage, click on "Discover" and add in your index as below. Click next:
+![Alt text](pics/kibana1.png?raw=true)
+
+Select @timestamp:
+![Alt text](pics/kibana2.png?raw=true)
+
+Select Discover and see the messages:
+![Alt text](pics/kibana3.png?raw=true)
+
 ## List out available Indexes:
 
 Once you've deployed the stack, on your server command line, you can run the following command to see the indexes available.
 
     # curl localhost:9200/_cat/indices?v
-
-## Add index In Kibana
-screenshot here
-
 
 # Grafana Setup:
 As part of this role I've include a script that will install grafana. Simply run the script, then login to the grafana webpage on port 3000.
