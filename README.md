@@ -45,7 +45,7 @@ PLAY RECAP *********************************************************************
 34.245.169.116             : ok=0    changed=0    unreachable=1    failed=0
 ```
 
-Run the following commands that are in the pre_run.sh script:
+Run the following commands that are in the pre_run.sh script. Replace with your .pem key name:
 ```
 # ssh-agent bash
 # ssh-add ../you_ec2_key.pem
