@@ -166,3 +166,15 @@ Run the following commands that are in the pre_run.sh script:
 ```
 Now re-run the ansible-playbook. It should work this time.
 
+# What Next?
+
+Monitor additional servers and send your data back to logstash.
+
+Run the deployELK.yml again but ony run the metricbeat and filebeat parts.
+Edit this line in the filebeat.yml:
+
+    # vi /data/filebeat/filebeat.yml
+    output.logstash:
+    FROM--> hosts: ["localhost:5044"]
+    TO --> hosts: ["EC2_IP:5044"]
+
