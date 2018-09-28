@@ -55,7 +55,7 @@ Once you've deployed the stack, on your server command line, you can run the fol
 
 # Grafana Setup:
 
-As part of this role I've include a script that will install grafana. Simply run the script, then login to the grafana webpage on port 3000.
+If you run the whole role, Grafana will be installed as part of the ansible run. If you want to run it manually, it looks like this:
 
 <details>
  <summary>Grafana setup</summary>
