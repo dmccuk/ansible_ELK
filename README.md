@@ -1,8 +1,8 @@
 ![Alt text](pics/elk1.png?raw=true)
 
-# Ansible Playbook & Role for ELK Stack + beats deployment
+# Ansible Playbook & Role for Elastic Stack + beats deployment
 
-This repo containts everything you need to get started with ELK Stack + beats using ansible to deploy the code on your server.
+This repo containts everything you need to get started with Elastic Stack + beats using ansible to deploy the code on your server.
 
 In this repo there is a playbook with all the code contained in one file (elk.yml) and an ansible role under the "role" directory that does exactly the same thing, but within an ansible role setup.
 
@@ -10,7 +10,7 @@ In this repo there is a playbook with all the code contained in one file (elk.ym
 This repo expects you to already know how to use ansible playbooks and roles.
 
 ## Pre-requisites
-Please install the following on all nodes you want to deploy ELK Stack on:
+Please install the following on all nodes you want to deploy Elastic Stack on:
 
  * Server used: Ubuntu 16.04
  * Packages: wget curl git python-minimal default-jre
