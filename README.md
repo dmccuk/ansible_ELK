@@ -12,17 +12,19 @@ This repo expects you to already know how to use ansible playbooks and roles.
 ## Pre-requisites
 Please install the following on all nodes you want to deploy Elastic Stack on:
 
- * Server used: Ubuntu 16.04
- * Packages: wget curl git python-minimal default-jre
+ * A Local install of Ansible
+ * I used a Ubuntu 16.04 AMI (ami-0773391ae604c49a4 in region eu-west1)
+ * Install Packages: wget curl git python-minimal default-jre
  * Minimum memory requirements: 4GB (t2.medium in AWS)
 
 ## Usage
 Clone the repo:
 
-    # git clone https://github.com/dmccuk/ansible_play_role.git
+    # git clone https://github.com/dmccuk/ansible_ELK.git
 
 Run the playbook:
 
+    # cd ansible_ELK
     # ansible-playbook -i <server_name/ip>, elk.yml
 
 If you get an error about Permission denied please check the bottom of this page.
