@@ -21,13 +21,33 @@ Please install the following on all nodes you want to deploy Elastic Stack on:
 Clone the repo:
 
     # git clone https://github.com/dmccuk/ansible_ELK.git
-
-Run the playbook:
-
     # cd ansible_ELK
+
+To Run the ansible playbook:
     # ansible-playbook -i <server_name/ip>, elk.yml
 
-If you get an error about Permission denied please check the bottom of this page.
+To run the ansible role:
+    # cd ansible_ELK/roles
+    # ansible-playbook -i <server_name/ip>, deployELK.yml
+
+Edit the main.yml
+    # vi elk_config/tasks/main.yml
+
+If you get an error about Permission denied (below) try this:
+```
+fatal: [34.245.169.116]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '34.245.169.116' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey).\r\n", "unreachable": true}
+        to retry, use: --limit @/home/vagrant/ansible/roles/deployELK.retry
+
+PLAY RECAP ************************************************************************************************
+34.245.169.116             : ok=0    changed=0    unreachable=1    failed=0
+```
+
+Run the following commands that are in the pre_run.sh script:
+```
+# ssh-agent bash
+# ssh-add ../you_ec2_key.pem
+```
+Now re-run the ansible-playbook. It should work this time.
 
 ## Open Kibana
 
@@ -150,23 +170,6 @@ Install the "stress" program on Ubuntu to make the metrics move and watch them o
 
 Now go back to grafana and watch the server resources change.
 
-# ISSUES:
-If you get this error:
-
-```
-fatal: [34.245.169.116]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '34.245.169.116' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey).\r\n", "unreachable": true}
-        to retry, use: --limit @/home/vagrant/ansible/roles/deployELK.retry
-
-PLAY RECAP ************************************************************************************************
-34.245.169.116             : ok=0    changed=0    unreachable=1    failed=0
-```
-
-Run the following commands that are in the pre_run.sh script:
-```
-# ssh-agent bash
-# ssh-add ../you_ec2_key.pem
-```
-Now re-run the ansible-playbook. It should work this time.
 
 # What Next?
 
