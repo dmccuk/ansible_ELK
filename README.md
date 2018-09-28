@@ -24,13 +24,16 @@ Clone the repo:
     # cd ansible_ELK
 
 To Run the ansible playbook:
+
     # ansible-playbook -i <server_name/ip>, elk.yml
 
 To run the ansible role:
+
     # cd ansible_ELK/roles
     # ansible-playbook -i <server_name/ip>, deployELK.yml
 
 Edit the main.yml
+
     # vi elk_config/tasks/main.yml
 
 If you get an error about Permission denied (below) try this:
