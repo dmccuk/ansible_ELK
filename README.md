@@ -56,7 +56,7 @@ Now re-run the ansible-playbook. It should work this time.
 
 Go to the URL for Kibana:
 
-http://<server_or_IP:5601
+http://<server_or_IP>:5601
 
 ## Add index In Kibana
 
@@ -136,7 +136,7 @@ Sep 27 09:10:28 ip-172-31-25-50 systemd[1]: Started Grafana instance.
 
 ### Grafana Web URL
 
-Visit http://<fqdn_or_IP:3000
+Visit http://<fqdn_or_IP>:3000
 
 Login username and password is: admin/admin
 
