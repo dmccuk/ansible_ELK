@@ -1,4 +1,4 @@
----
+GG-
  - hosts: all
    remote_user: ubuntu
    become: true
@@ -205,3 +205,5 @@
         src: elk_config/grafana.sh.j2
         dest: /data/grafana.sh
         mode: 0755
+    - name: run the grafana setup script
+      command: sh /data/grafana.sh

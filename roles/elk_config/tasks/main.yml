@@ -9,4 +9,4 @@
 - name: Get my public IP
   ipify_facts:
 - debug: var=ipify_public_ip
-- debug: msg="If all went well you can now connect to *** http://{{ ipify_public_ip }}:5601 *** Kibana takes around 5 minutes to run the first time."
+- debug: msg="If all went well you can now connect to *** KIBANA:  http://{{ ipify_public_ip }}:5601 *** & GRAFANA: http://{{ ipify_public_ip }}:3000 *** Kibana can take a few minutes to run the first time."

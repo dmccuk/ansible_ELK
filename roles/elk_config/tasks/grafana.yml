@@ -4,4 +4,5 @@
         src: elk_config/templates/grafana.sh.j2
         dest: /data/grafana.sh
         mode: 0755
-
+    - name: run the grafana setup script
+      command: sh /data/grafana.sh
