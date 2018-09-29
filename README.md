@@ -1,44 +1,86 @@
-![Alt text](elk1.png?raw=true)
+![Alt text](pics/elk1.png?raw=true)
 
-# Ansible Playbook & Role for ELK Stack + beats deployment
+# Ansible Playbook & Role for Elastic Stack + beats deployment
 
-This repo containts everything you need to get started with ELK Stack + beats using ansible to deploy the code on your server.
+This repo containts everything you need to get started with Elastic Stack + beats using ansible to deploy the code on your server.
 
 In this repo there is a playbook with all the code contained in one file (elk.yml) and an ansible role under the "role" directory that does exactly the same thing, but within an ansible role setup.
 
 ## Assumed knowledge
-This repo expects you to already know how to use ansible playbooks and roles.
+An understanding or ansible playbooks and roles will help but I list the commands below.
 
 ## Pre-requisites
-Please install the following on all nodes you want to deploy ELK Stack on:
+Please install the following on all nodes you want to deploy Elastic Stack on:
 
- * Server used: Ubuntu 16.04
- * Packages: wget curl git python-minimal default-jre
+ * A Local install of Ansible
+ * I used a Ubuntu 16.04 AMI (ami-0773391ae604c49a4 in region eu-west1)
+ * Install Packages: wget curl git python-minimal default-jre
  * Minimum memory requirements: 4GB (t2.medium in AWS)
 
 ## Usage
 Clone the repo:
 
-    # git clone https://github.com/dmccuk/ansible_play_role.git
+    # git clone https://github.com/dmccuk/ansible_ELK.git
+    # cd ansible_ELK
 
-Run the playbook:
+To Run the ansible playbook:
 
     # ansible-playbook -i <server_name/ip>, elk.yml
 
-If you get an error about Permission denied please check the bottom of this page.
+To run the ansible role:
+
+    # cd ansible_ELK/roles
+    # ansible-playbook -i <server_name/ip>, deployELK.yml
+
+Edit the main.yml
+
+    # vi elk_config/tasks/main.yml
+
+If you get an error about Permission denied (below) try this:
+```
+fatal: [34.245.169.116]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '34.245.169.116' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey).\r\n", "unreachable": true}
+        to retry, use: --limit @/home/vagrant/ansible/roles/deployELK.retry
+
+PLAY RECAP ************************************************************************************************
+34.245.169.116             : ok=0    changed=0    unreachable=1    failed=0
+```
+
+Run the following commands that are in the pre_run.sh script. Replace with your .pem key name:
+```
+# ssh-agent bash
+# ssh-add ../you_ec2_key.pem
+```
+Now re-run the ansible-playbook. It should work this time.
+
+## Open Kibana
+
+Go to the URL for Kibana:
+
+http://<server_or_IP>:5601
+
+## Add index In Kibana
+
+On your Kibana webpage, click on "Discover" and add in your index as below. Click next:
+![Alt text](pics/kibana1.PNG?raw=true)
+
+Select @timestamp:
+![Alt text](pics/kibana2.PNG?raw=true)
+
+Select Discover and see the messages:
+![Alt text](pics/kibana3.PNG?raw=true)
 
 ## List out available Indexes:
 
 Once you've deployed the stack, on your server command line, you can run the following command to see the indexes available.
 
-    # curl localhost:9200/_cat/indices?v
-
-## Add index In Kibana
-screenshot here
-
+    # curl -s http://localhost:9200/_cat/indices?v
+    health status index                     uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   .kibana                   2UuCqV84Rb-u7rpUXHWDWg   1   0          2            0     20.9kb         20.9kb
+    yellow open   logstash-daily-2018.09.27 tbeKCDg_QOCB-7B-oQUiTQ   5   1     126642            0     77.4mb         77.4mb
 
 # Grafana Setup:
-As part of this role I've include a script that will install grafana. Simply run the script, then login to the grafana webpage on port 3000.
+
+If you run the whole role, Grafana will be installed as part of the ansible run. If you want to run it manually, it looks like this:
 
 <details>
  <summary>Grafana setup</summary>
@@ -94,29 +136,53 @@ Sep 27 09:10:28 ip-172-31-25-50 systemd[1]: Started Grafana instance.
 
 ### Grafana Web URL
 
-Visit http://<server_or_IP:3000
+Visit http://<fqdn_or_IP>:3000
 
 Login username and password is: admin/admin
 
+![Alt text](pics/grafana1.PNG?raw=true)
+
 ## Grafana setup
-Add example grafana dashboard file. This can be downloaded to the PC and imported into Grafana. It should work out of the box.
-Screen shot here.
+Add example grafana dashboard file. This can be downloaded to the PC and imported into Grafana (Grafana_basic_dashboard):
 
-# ISSUES:
-If you get this error:
+Now setup Elasticsearch as your Datasource:
+![Alt text](pics/grafana1.1PNG?raw=true)
+![Alt text](pics/grafana4.PNG?raw=true)
 
-```
-fatal: [34.245.169.116]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '34.245.169.116' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey).\r\n", "unreachable": true}
-        to retry, use: --limit @/home/vagrant/ansible/roles/deployELK.retry
+And use these settings:
+![Alt text](pics/grafana5.PNG?raw=true)
+Save and exit.
 
-PLAY RECAP ************************************************************************************************
-34.245.169.116             : ok=0    changed=0    unreachable=1    failed=0
-```
+Now import the dashboard. Download this file from this GitHub to you PC (Grafana_basic_dashboard):
+![Alt text](pics/grafana2.PNG?raw=true)
+![Alt text](pics/grafana3.PNG?raw=true)
 
-Run the following commands that are in the pre_run.sh script:
-```
-# ssh-agent bash
-# ssh-add ../you_ec2_key.pem
-```
-Now re-run the ansible-playbook. It should work this time.
+Select the file to import and set these settings:
+![Alt text](pics/grafana6.PNG?raw=true)
+
+The dashboard will appear and you will see basic CPU and Memory utilisation.
+![Alt text](pics/grafana7.PNG?raw=true)
+
+# Test the metrics!
+
+Install the "stress" program on Ubuntu to make the metrics move and watch them on grafana.
+
+    # sudo apt install stress -y
+    # stress -c 4 -m 2 -d 1
+    stress: info: [10844] dispatching hogs: 2 cpu, 0 io, 2 vm, 1 hdd
+
+Now go back to grafana and watch the server resources change.
+
+
+# What Next?
+
+Monitor additional servers and send your data back to logstash.
+
+Run the deployELK.yml again but ony run the metricbeat and filebeat parts.
+Edit this line in the filebeat.yml:
+
+    # vi /data/filebeat/filebeat.yml
+    output.logstash:
+    FROM--> hosts: ["localhost:5044"]
+    TO --> hosts: ["EC2_IP:5044"]
 
