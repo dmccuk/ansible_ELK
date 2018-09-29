@@ -12,10 +12,16 @@ An understanding or ansible playbooks and roles will help but I list the command
 ## Pre-requisites
 Please install the following on all nodes you want to deploy Elastic Stack on:
 
- * A Local install of Ansible
- * I used a Ubuntu 16.04 AMI (ami-0773391ae604c49a4 in region eu-west1)
- * Install Packages: wget curl git python-minimal default-jre
+Local:
+ * Installation of Ansible
+
+Remote:
+ * tested on a Ubuntu 16.04 AMI (ami-0773391ae604c49a4 in region eu-west1)
+ * Install these Packages: wget curl git python-minimal default-jre
  * Minimum memory requirements: 4GB (t2.medium in AWS)
+ * Open Firewall ports:
+   * Ingress: 22(ssh), 5601(kibana),3000(grafana),5044(logstash)
+   * Egress: ALL
 
 ## Usage
 Clone the repo:
@@ -23,20 +29,27 @@ Clone the repo:
     # git clone https://github.com/dmccuk/ansible_ELK.git
     # cd ansible_ELK
 
-To Run the ansible playbook:
+## Playbook or Role? (just run one of them)
+
+ * elk.yml has all the tasks in one place.
+ * deployELK.yml is a role and each task is seperated out into individual .yml files.
+
+I personally like the role.
+
+### To Run the ansible playbook:
 
     # ansible-playbook -i <server_name/ip>, elk.yml
 
-To run the ansible role:
+### To run the ansible role:
 
     # cd ansible_ELK/roles
     # ansible-playbook -i <server_name/ip>, deployELK.yml
 
-Edit the main.yml
+Edit the main.yml to customise what components are run:
 
     # vi elk_config/tasks/main.yml
 
-If you get an error about Permission denied (below) try this:
+If you get an error about Permission denied UNREACHABLE try this:
 ```
 fatal: [34.245.169.116]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '34.245.169.116' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey).\r\n", "unreachable": true}
         to retry, use: --limit @/home/vagrant/ansible/roles/deployELK.retry
@@ -60,7 +73,7 @@ http://<server_or_IP>:5601
 
 ## Add index In Kibana
 
-On your Kibana webpage, click on "Discover" and add in your index as below. Click next:
+On your Kibana webpage, click on "Discover" or "Management" and add in your index as below. Click next:
 ![Alt text](pics/kibana1.PNG?raw=true)
 
 Select @timestamp:
@@ -80,7 +93,7 @@ Once you've deployed the stack, on your server command line, you can run the fol
 
 # Grafana Setup:
 
-If you run the whole role, Grafana will be installed as part of the ansible run. If you want to run it manually, it looks like this:
+If you run the whole ansible role, Grafana will be installed by default. If you want to run it manually, it looks like this:
 
 <details>
  <summary>Grafana setup</summary>
@@ -151,7 +164,8 @@ Now setup Elasticsearch as your Datasource:
 
 And use these settings:
 ![Alt text](pics/grafana5.PNG?raw=true)
-Save and exit.
+
+Save and Test.
 
 Now import the dashboard. Download this file from this GitHub to you PC (Grafana_basic_dashboard):
 ![Alt text](pics/grafana2.PNG?raw=true)
@@ -174,15 +188,22 @@ Install the "stress" program on Ubuntu to make the metrics move and watch them o
 Now go back to grafana and watch the server resources change.
 
 
-# What Next?
+# Next Steps?
 
-Monitor additional servers and send your data back to logstash.
+## Monitor additional servers and send your data back to logstash.
 
-Run the deployELK.yml again but ony run the metricbeat and filebeat parts.
-Edit this line in the filebeat.yml:
+You can run the ansible role on any other Linux server. Run the deployELK.yml again but only run the metricbeat and filebeat parts.
+
+Once deployed, edit this line in the filebeat.yml:
 
     # vi /data/filebeat/filebeat.yml
     output.logstash:
     FROM--> hosts: ["localhost:5044"]
     TO --> hosts: ["EC2_IP:5044"]
 
+## Add in new Metrics
+
+Try adding your own dashboards using the metricbeat data. For my information, go you www.grafana.com
+
+I hope this has been useful.
+Thanks for taking a look - Dennis
