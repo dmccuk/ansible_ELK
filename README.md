@@ -7,7 +7,7 @@ This repo containts everything you need to get started with Elastic Stack + beat
 In this repo there is a playbook with all the code contained in one file (elk.yml) and an ansible role under the "role" directory that does exactly the same thing, but within an ansible role setup.
 
 ## Assumed knowledge
-An understanding or ansible playbooks and roles will help but I list the commands below.
+An understanding of ansible playbooks and roles will help but I list the commands below.
 
 ## Pre-requisites
 Please install the following on all nodes you want to deploy Elastic Stack on:
