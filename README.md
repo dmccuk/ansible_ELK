@@ -182,11 +182,10 @@ The dashboard will appear and you will see basic CPU and Memory utilisation.
 Install the "stress" program on Ubuntu to make the metrics move and watch them on grafana.
 
     # sudo apt install stress -y
-    # stress -c 4 -m 2 -d 1
-    stress: info: [10844] dispatching hogs: 2 cpu, 0 io, 2 vm, 1 hdd
+    # stress --cpu 3
+    # stress --cpu 3 -m 2 -d 1
 
 Now go back to grafana and watch the server resources change.
-
 
 # Next Steps?
 
