@@ -183,8 +183,11 @@ Install the "stress" program on Ubuntu to make the metrics move and watch them o
 
     # sudo apt install stress -y
 To test the CPU:
+
     # stress --cpu 3
+    
 To test CPU, memory & IO:
+
     # stress --cpu 3 -m 2 -d 1
 
 Now go back to grafana and watch the server resources change.
