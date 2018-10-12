@@ -1,0 +1,36 @@
+# Metricbeat Setup
+    - name: Creates /data directory
+      file:
+        path: /data
+        state: directory
+        mode: "u=rwx,g=rwx,o=rwx"
+    - name: Download metricbeat tar ball
+      get_url:
+        url: https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.4.0-linux-x86_64.tar.gz
+        dest: /data/metricbeat-6.4.0-linux-x86_64.tar.gz
+        mode: 0755
+    - name: unzip metricbeat
+      unarchive:
+        src: /data/metricbeat-6.4.0-linux-x86_64.tar.gz
+        dest: /data/
+        remote_src: yes
+        creates: /data/metricbeat-6.4.0-linux-x86_64/metricbeat.yml
+    - name: metricbeat systemd copy
+      template:
+        src: elk_config/templates/metricbeat.service.j2
+        dest: /etc/systemd/system/metricbeat.service
+        mode: 0644
+    - name: Update default metricbeat config
+      template:
+        src: elk_config/templates/metricbeat.yml.j2
+        dest: /data/metricbeat-6.4.0-linux-x86_64/metricbeat.yml
+        mode: 0700
+    - name: force systemd reload
+      systemd:
+        daemon_reload: yes
+    - name: Start the logstash metricbeat service
+      service:
+        name: metricbeat
+        state: started
+        enabled: yes
+
