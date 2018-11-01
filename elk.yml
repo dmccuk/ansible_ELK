@@ -1,4 +1,4 @@
-GG-
+---
  - hosts: all
    remote_user: ubuntu
    become: true
