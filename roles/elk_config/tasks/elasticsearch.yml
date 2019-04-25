@@ -3,7 +3,7 @@
     - name: install java
       apt:
         name: default-jre
-        stats: latest
+        state: latest
     - sysctl:
         name: vm.max_map_count
         value: 262144
