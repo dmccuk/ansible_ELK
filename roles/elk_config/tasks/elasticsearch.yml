@@ -1,5 +1,9 @@
 ---
 # Elasticsearch setup
+    - name: install java
+      apt:
+        name: default-jre
+        stats: latest
     - sysctl:
         name: vm.max_map_count
         value: 262144
