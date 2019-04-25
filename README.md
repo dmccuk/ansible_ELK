@@ -210,6 +210,12 @@ Once deployed, edit this line in the filebeat.yml:
     FROM--> hosts: ["localhost:5044"]
     TO --> hosts: ["EC2_IP:5044"]
 
+Now restart filebeat to update the new setting:
+
+    # sudo service filebeat restart
+    
+Import the Multiserver grafana dashboard.
+
 ## Add in new Metrics
 
 Try adding your own dashboards using the metricbeat data. For my information, go you www.grafana.com
