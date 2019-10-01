@@ -17,7 +17,7 @@ Local:
 
 Remote:
  * tested on a Ubuntu 16.04 AMI (ami-0773391ae604c49a4 in region eu-west1)
- * Install these Packages: wget curl git python-minimal default-jre
+ **** Install these Packages: wget curl git python-minimal default-jre ****
  * Minimum memory requirements: 4GB (t2.medium in AWS)
  * Open Firewall ports:
    * Ingress: 22(ssh), 5601(kibana),3000(grafana),5044(logstash)
