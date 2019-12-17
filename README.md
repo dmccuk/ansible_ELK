@@ -201,7 +201,7 @@ You can run the ansible role on any other Linux server. Run the deployELK.yml ag
 ### To install beats on other nodes:
 
     # cd ansible_ELK/roles
-    # ansible-playbook -i <server_name/ip>, deployELK.yml
+    # ansible-playbook -i <server_name/ip>, deployBEATS.yml
 
 Once deployed, edit this line in the filebeat.yml:
 
