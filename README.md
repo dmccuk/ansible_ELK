@@ -29,17 +29,6 @@ Clone the repo:
     # git clone https://github.com/dmccuk/ansible_ELK.git
     # cd ansible_ELK
 
-## Playbook or Role? (just run one of them)
-
- * elk.yml has all the tasks in one place.
- * deployELK.yml is a role and each task is seperated out into individual .yml files.
-
-I personally like the role.
-
-### To Run the ansible playbook:
-
-    # ansible-playbook -i <server_name/ip>, elk.yml
-
 ### To run the ansible role:
 
     # cd ansible_ELK/roles
