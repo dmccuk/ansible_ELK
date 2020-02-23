@@ -34,7 +34,7 @@ Clone the repo:
     # cd ansible_ELK/roles
     # ansible-playbook -i <server_name/ip>, deployELK.yml
 
-Edit the main.yml to customise what components are run:
+You can Edit the main.yml to customise what components are run (but I don't recommend it):
 
     # vi elk_config/tasks/main.yml
 
