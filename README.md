@@ -210,5 +210,13 @@ Import the Multiserver grafana dashboard.
 
 Try adding your own dashboards using the metricbeat data. For my information, go you www.grafana.com
 
+Tip
+===
+If you want to use this setup you need to be mindful of how much free space you have on the server. I recommend creating a seperate LV to store the ES data on some large disks. You need to correctly size your environment by working out how much data one server brings in over 24 hours. Then do the math and times that number by the total number of servers AND how many days worth of data you want to keep. Then add 25% for good measure.
+
+ES data can be archived and stored in a different location for later retrieval. You'll need to automate this process to ensure you don't run out of space and lose data.
+
+Another option is to add Redis infront of ES. That way, Redis can manage the peaks and troughs of traffic and server as a buffer for when you get a storm of message due to an issue on one of your servers. If ES goes down for any reason, redis can buffer the messages for a period of time (while ES is down) so you can recover ES and not lose data.
+
 I hope this has been useful.
 Thanks for taking a look - Dennis
