@@ -187,14 +187,15 @@ Now go back to grafana and watch the server resources change.
 
 You can run the ansible role on any other Linux server. Run the deployELK.yml again but only run the metricbeat and filebeat parts.
 
-### To install beats on other nodes:
+### To install beats on other nodes (Back on the control node):
 
-    # cd ansible_ELK/roles
-    # ansible-playbook -i <server_name/ip>, deployBEATS.yml
+    # cd ~/ansible_ELK/roles
+    # ansible-playbook -i inventory_file deployBEATS.yml
 
-Once deployed, edit this line in the filebeat.yml:
+Once deployed, edit this line in the filebeat.yml on every server you want metric stats from:
 
-    # vi /data/filebeat/filebeat.yml
+    # ssh <IP_address_in_inventory>
+    # sudo vi /data/filebeat-6.4.0-linux-x86_64/filebeat.yml
     output.logstash:
     FROM--> hosts: ["localhost:5044"]
     TO --> hosts: ["EC2_IP:5044"]
