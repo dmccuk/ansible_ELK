@@ -2,7 +2,7 @@
 # Elasticsearch setup
     - name: install java
       apt:
-        name: default-jre
+        name: openjdk-8-jre
         state: latest
     - sysctl:
         name: vm.max_map_count
