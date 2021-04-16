@@ -8,7 +8,7 @@ LimitNOFILE=65536
 LimitMEMLOCK=infinity
 User=elasticsearch
 Group=elasticsearch
-ExecStart=/data/elasticsearch-6.4.0/bin/elasticsearch
+ExecStart=/data/{{ elastic }}/bin/elasticsearch
 
 [Install]
 WantedBy=multi-user.target

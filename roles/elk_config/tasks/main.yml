@@ -1,5 +1,6 @@
 ---
 # tasks file for setup_ELK
+- include: install_java.yml
 - include: elasticsearch.yml
 - include: logstash.yml
 - include: kibana.yml

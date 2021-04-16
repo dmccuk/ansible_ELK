@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/data/logstash-6.4.0/start.sh
+ExecStart=/data/{{ logstash }}/start.sh
 
 [Install]
 WantedBy=multi-user.target

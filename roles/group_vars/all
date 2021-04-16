@@ -1,0 +1,8 @@
+---
+elastic_master: localhost
+version: 6.8.15
+elastic: "elasticsearch-{{ version }}"
+kibana: "kibana-{{ version }}"
+logstash: "logstash-{{ version }}"
+metricbeat: "metricbeat-{{ version }}"
+filebeat: "filebeat-{{ version }}"

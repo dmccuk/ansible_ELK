@@ -1,0 +1,10 @@
+---
+- name: updated system
+  apt:
+    update_cache: yes
+
+- name: install java
+  apt:
+    name: openjdk-8-jre
+    state: latest
+

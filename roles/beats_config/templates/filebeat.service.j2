@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/data/filebeat-6.4.0-linux-x86_64/filebeat -e -c /data/filebeat-6.4.0-linux-x86_64/filebeat.yml
+ExecStart=/data/{{ filebeat }}-linux-x86_64/filebeat -e -c /data/{{ filebeat }}-linux-x86_64/filebeat.yml
 
 [Install]
 WantedBy=multi-user.target

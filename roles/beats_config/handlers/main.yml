@@ -1,2 +1,6 @@
 ---
 # handlers file for setup_ELK
+- name: restart filebeat
+  service:
+    name: filebeat
+    state: restarted

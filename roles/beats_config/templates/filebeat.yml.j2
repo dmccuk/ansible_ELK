@@ -14,4 +14,4 @@ processors:
     overwrite_keys: true
 
 output.logstash:
-  hosts: ["localhost:5044"]
+  hosts: ["{{ elastic_master }}:5044"]
