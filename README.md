@@ -4,49 +4,46 @@
 
 This repo containts everything you need to get started with Elastic Stack + beats using ansible to deploy the code on your server.
 
-In this repo there is a playbook with all the code contained in one file (elk.yml) and an ansible role under the "role" directory that does exactly the same thing, but within an ansible role setup.
-
-## Assumed knowledge
-An understanding of ansible playbooks and roles will help but I list the commands below.
-
 ## Pre-requisites
-Please install the following on all nodes you want to deploy Elastic Stack on:
+For this demo I use 1 x t2.medium for the Elastic Search master & 2 x t2.micro as my remote servers.
 
 Local:
- * Installation of Ansible
+ * Installation of Ansible: Latest version.
 
 Remote:
- * tested on a Ubuntu 16.04 AMI (ami-0773391ae604c49a4 in region eu-west1)
+ * tested on a Ubuntu 18.04 AMI (ami-0e0090d3db396e90d in region eu-west-3)
  * Install these Packages: wget curl git python-minimal default-jre *
  * Minimum memory requirements: 4GB (t2.medium in AWS)
  * Open Firewall ports:
-   * Ingress: 22(ssh), 5601(kibana),3000(grafana),5044(logstash)
+   * (Elastic Master) Ingress: 22(ssh), 5601(kibana),3000(grafana),5044(logstash)
+   * (Everything else) Ingress: 22(ssh)
    * Egress: ALL
 
 ## Usage
 Clone the repo:
+``
+$ git clone https://github.com/dmccuk/ansible_ELK.git
+$ cd ansible_ELK
+``
 
-    # git clone https://github.com/dmccuk/ansible_ELK.git
-    # cd ansible_ELK
+### Deploy Elastic Stack on the master node:
+Once you have a server to install the Elasticsearch, kibana and logstash on, get the IP address or servername and replace it in the comman below.
 
-### To run the ansible role:
-
-    # cd ansible_ELK/roles
-    # ansible-playbook -i <server_name/ip>, deployELK.yml
-
-You can Edit the main.yml to customise what components are run (but I don't recommend it):
-
-    # vi elk_config/tasks/main.yml
+  * I don't supply a username or password. I'm using the Ubuntu user and an SSH key. You can set up an SSH key yourself id you need to or add ````-u <username> -k```` and you will be prompted for your password.
+  * 
+``
+$ cd ansible_ELK/roles
+& ansible-playbook -i <server_name/ip>, deployELK.yml
+``
 
 If you get an error about Permission denied UNREACHABLE try this:
-```
+``
 fatal: [34.245.169.116]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '34.245.169.116' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey).\r\n", "unreachable": true}
         to retry, use: --limit @/home/vagrant/ansible/roles/deployELK.retry
 
 PLAY RECAP ************************************************************************************************
 34.245.169.116             : ok=0    changed=0    unreachable=1    failed=0
-```
-
+``
 Run the following commands that are in the pre_run.sh script. Replace with your .pem key name:
 ```
 # ssh-agent bash
@@ -55,12 +52,13 @@ Run the following commands that are in the pre_run.sh script. Replace with your 
 Now re-run the ansible-playbook. It should work this time.
 
 ## Open Kibana
-
-Go to the URL for Kibana:
+Once the playbook has completed, you should be able to go to access Kibana.
+Go to the URL:
 
 http://<server_or_IP>:5601
 
 ## Add index In Kibana
+The Index should already be available because Ansible setups up metricbeat on the Elastic Master server and forwards on metrics to logstash which in turn forwards to Elatsicsearch. Follow these instructions to add the index.
 
 On your Kibana webpage, click on "Discover" or "Management" and add in your index as below. Click next:
 ![Alt text](pics/kibana1.PNG?raw=true)
@@ -72,16 +70,14 @@ Select Discover and see the messages:
 ![Alt text](pics/kibana3.PNG?raw=true)
 
 ## List out available Indexes:
-
 Once you've deployed the stack, on your server command line, you can run the following command to see the indexes available.
 
     # curl -s http://localhost:9200/_cat/indices?v
     health status index                     uuid                   pri rep docs.count docs.deleted store.size pri.store.size
     green  open   .kibana                   2UuCqV84Rb-u7rpUXHWDWg   1   0          2            0     20.9kb         20.9kb
-    yellow open   logstash-daily-2018.09.27 tbeKCDg_QOCB-7B-oQUiTQ   5   1     126642            0     77.4mb         77.4mb
+    yellow open   logstash-daily-2021.04.10 tbeKCDg_QOCB-7B-oQUiTQ   5   1     126642            0     77.4mb         77.4mb
 
 # Grafana Setup:
-
 If you run the whole ansible role, Grafana will be installed by default. If you want to run it manually, it looks like this:
 
 <details>
@@ -137,7 +133,6 @@ Sep 27 09:10:28 ip-172-31-25-50 systemd[1]: Started Grafana instance.
 </p></details>
 
 ### Grafana Web URL
-
 Visit http://<fqdn_or_IP>:3000
 
 Login username and password is: admin/admin
