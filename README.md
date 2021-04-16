@@ -21,10 +21,10 @@ Remote:
 
 ## Usage
 Clone the repo:
-``
+```
 $ git clone https://github.com/dmccuk/ansible_ELK.git
 $ cd ansible_ELK
-``
+```
 
 ### Deploy Elastic Stack on the master node:
 Once you have a server to install the Elasticsearch, kibana and logstash on, get the IP address or servername and replace it in the comman below.
