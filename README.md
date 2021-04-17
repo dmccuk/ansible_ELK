@@ -1,6 +1,6 @@
 ![Alt text](pics/elk1.png?raw=true)
 
-# Ansible Playbook & Role for Elastic Stack + beats [Lab] deployment
+# Ansible Role for Elastic Stack + beats [Lab] deployment
 
 This repo containts everything you need to get started with Elastic Stack + beats using ansible to deploy the code on your server.
 
