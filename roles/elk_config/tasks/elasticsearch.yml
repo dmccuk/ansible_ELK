@@ -1,4 +1,10 @@
 ---
+- name: temporarily set SELINUX to permissive
+  selinux:
+    policy: targeted
+    state: permissive
+  when: ansible_os_family == 'RedHat'
+
 - name: update sysctl for max_map_count
   sysctl:
     name: vm.max_map_count

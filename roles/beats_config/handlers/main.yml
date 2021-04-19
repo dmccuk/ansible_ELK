@@ -4,3 +4,8 @@
   service:
     name: filebeat
     state: restarted
+
+- name: restart metricbeat
+  service:
+    name: metricbeat
+    state: restarted

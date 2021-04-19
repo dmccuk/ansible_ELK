@@ -26,10 +26,14 @@ metricbeat.modules:
 setup.kibana:
   host: "0.0.0.0:5601"
 
-output.file:
-  enabled: true
-  path: "/tmp/metricbeat"
-  filename: metricbeat
-  rotate_every_kb: 10000
-  number_of_files: 5
-  permissions: 0600
+#output.file:
+#  enabled: true
+#  path: "/tmp/metricbeat"
+#  filename: metricbeat
+#  rotate_every_kb: 10000
+#  number_of_files: 5
+#  permissions: 0600
+
+output.logstash:
+  hosts: ["localhost:5044"]
+

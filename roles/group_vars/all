@@ -1,5 +1,5 @@
 ---
-elastic_master: localhost
+elastic_master: 15.237.62.112
 version: 6.8.15
 elastic: "elasticsearch-{{ version }}"
 kibana: "kibana-{{ version }}"

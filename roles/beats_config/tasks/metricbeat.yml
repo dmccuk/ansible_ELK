@@ -1,10 +1,15 @@
 ---
-# Metricbeat Setup
+- name: temporarily set SELINUX to permissive
+  selinux:
+    policy: targeted
+    state: permissive
+  when: ansible_os_family == 'RedHat'
+
 - name: Creates /data directory
   file:
     path: /data
     state: directory
-    mode: "u=rwx,g=rwx,o=rwx"
+    mode: 0777
 
 - name: Download metricbeat tar ball
   get_url:
@@ -21,15 +26,16 @@
 
 - name: metricbeat systemd copy
   template:
-    src: elk_config/templates/metricbeat.service.j2
+    src: beats_config/templates/metricbeat.service.j2
     dest: /etc/systemd/system/metricbeat.service
     mode: 0644
 
 - name: Update default metricbeat config
   template:
-    src: elk_config/templates/metricbeat.yml.j2
+    src: beats_config/templates/metricbeat.yml.j2
     dest: /data/{{ metricbeat }}-linux-x86_64/metricbeat.yml
     mode: 0700
+  notify: restart metricbeat
 
 - name: force systemd reload
   systemd:
