@@ -1,11 +1,11 @@
 ![Alt text](pics/elk1.png?raw=true)
 
-# Ansible Playbook & Role for Elastic Stack + beats [Lab] deployment
+# Ansible Role for Elastic Stack + beats [Lab] deployment
 
-This repo containts everything you need to get started with Elastic Stack + beats using ansible to deploy the code on your server.
+This repo contains everything you need to get started with Elastic Stack + beats using ansible to deploy the code on your server.
 
 ## Pre-requisites
-For this demo I use 1 x t2.medium for the Elastic Search master & 2 x t2.micro as my remote servers.
+For this demo I use 1 x t2.medium for the Elastic Search master & 2 x t2.micro as my remote servers. I run Ansible from a control node.
 
 Local:
  * Installation of Ansible: Latest version.
@@ -21,29 +21,29 @@ Remote:
 
 ## Usage
 Clone the repo:
-``
+```
 $ git clone https://github.com/dmccuk/ansible_ELK.git
 $ cd ansible_ELK
-``
+```
 
 ### Deploy Elastic Stack on the master node:
 Once you have a server to install the Elasticsearch, kibana and logstash on, get the IP address or servername and replace it in the comman below.
 
   * I don't supply a username or password. I'm using the Ubuntu user and an SSH key. You can set up an SSH key yourself id you need to or add ````-u <username> -k```` and you will be prompted for your password.
   * 
-``
+```
 $ cd ansible_ELK/roles
 & ansible-playbook -i <server_name/ip>, deployELK.yml
-``
+```
 
 If you get an error about Permission denied UNREACHABLE try this:
-``
+```
 fatal: [34.245.169.116]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '34.245.169.116' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey).\r\n", "unreachable": true}
         to retry, use: --limit @/home/vagrant/ansible/roles/deployELK.retry
 
 PLAY RECAP ************************************************************************************************
 34.245.169.116             : ok=0    changed=0    unreachable=1    failed=0
-``
+```
 Run the following commands that are in the pre_run.sh script. Replace with your .pem key name:
 ```
 # ssh-agent bash
