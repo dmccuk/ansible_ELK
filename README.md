@@ -161,7 +161,6 @@ The dashboard will appear and you will see basic CPU and Memory utilisation.
 ![Alt text](pics/grafana7.PNG?raw=true)
 
 # Test the metrics!
-
 Install the "stress" program on Ubuntu to make the metrics move and watch them on grafana.
 
     # sudo apt install stress -y
@@ -196,16 +195,9 @@ Now you can run the following Ansible role to setup Beats on the new servers.
     # cd ~/ansible_ELK/roles
     # ansible-playbook -i inventory_file deployBEATS.yml
 
-The Ansible coniguration takes care of the 
-
-Now restart filebeat to update the new setting:
-
-    # sudo service filebeat restart
-    
-Import the Multiserver grafana dashboard.
+The Ansible coniguration takes care of the IP address being added to the correct file.
 
 ## Add in new Metrics
-
 Try adding your own dashboards using the metricbeat data. For my information, go you www.grafana.com
 
 Tip
