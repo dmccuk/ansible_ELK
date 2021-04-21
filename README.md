@@ -178,21 +178,25 @@ Now go back to grafana and watch the server resources change.
 # Next Steps?
 
 ## Monitor additional servers and send your data back to logstash.
-
-You can run the ansible role on any other Linux server. Run the deployELK.yml again but only run the metricbeat and filebeat parts.
+If you run the deployBEATS.yml Ansible role, you can add more servers in and see their metrics appear in Grafana.
 
 ### To install beats on other nodes (Back on the control node):
+First, updated the ```group_vars/all``` file with the IP address of the Elastic master server.
+
+```
+$ cat group_vars/all
+---
+elastic_master: IP/SERVERNAME
+```
+Add in the IP address and save the file. This variable will be used in the filebeat.yml config and send the metrics to Elasticsearch.
+** At this point, you may need to open the FW for port 9200 **
+
+Now you can run the following Ansible role to setup Beats on the new servers.
 
     # cd ~/ansible_ELK/roles
     # ansible-playbook -i inventory_file deployBEATS.yml
 
-Once deployed, edit this line in the filebeat.yml on every server you want metric stats from:
-
-    # ssh <IP_address_in_inventory>
-    # sudo vi /data/filebeat-6.4.0-linux-x86_64/filebeat.yml
-    output.logstash:
-    FROM--> hosts: ["localhost:5044"]
-    TO --> hosts: ["EC2_IP:5044"]
+The Ansible coniguration takes care of the 
 
 Now restart filebeat to update the new setting:
 
